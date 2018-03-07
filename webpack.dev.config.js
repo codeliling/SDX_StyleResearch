@@ -31,5 +31,23 @@ module.exports = merge(webpackBaseConfig, {
             template: './src/template/index.ejs',
             inject: false
         })
-    ]
+    ],
+    //设置跨域代理
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        port:8778,
+        stats: { colors: true },
+        proxy: {
+            //匹配代理的url
+            '/api': {
+            // 目标服务器地址
+              target: 'http://192.168.3.78:8080/sdx',
+              changeOrigin: true,
+            //  secure: false,
+              pathRewrite: {'^/api': ''}
+            }
+         }
+    }
 });
